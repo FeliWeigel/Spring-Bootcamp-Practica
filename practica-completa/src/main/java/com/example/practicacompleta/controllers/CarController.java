@@ -6,8 +6,13 @@ import com.example.practicacompleta.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -31,4 +36,5 @@ public class CarController {
     public ResponseEntity<List<Car>> getCarsByBrand(@PathVariable String brand){
         return ResponseEntity.ok(carService.carsByBrand(brand));
     }
+
 }
