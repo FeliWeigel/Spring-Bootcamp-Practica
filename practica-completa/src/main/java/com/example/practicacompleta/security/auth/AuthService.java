@@ -13,6 +13,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static com.example.practicacompleta.entities.Role.USER;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -47,6 +52,7 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request){
+
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())

@@ -4,6 +4,7 @@ import com.example.practicacompleta.entities.Car;
 import com.example.practicacompleta.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,22 @@ public class CarController {
     @GetMapping("/brand/{brand}")
     public ResponseEntity<List<Car>> getCarsByBrand(@PathVariable String brand){
         return ResponseEntity.ok(carService.carsByBrand(brand));
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteAllCars(){
+        carService.deleteAllCars();
+        return ResponseEntity.ok("All cars deleted! Current list of Cars size: " + carService.allCars().size());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCarById(@PathVariable Long id){
+        return ResponseEntity.ok(carService.deleteCarById(id));
+    }
+
+    @DeleteMapping("/delete/{model}")
+    public ResponseEntity<String> deleteCarByModel(@PathVariable String model){
+        return ResponseEntity.ok(carService.deleteCarByModel(model));
     }
 
 }
