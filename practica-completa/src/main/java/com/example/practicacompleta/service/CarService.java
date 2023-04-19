@@ -2,6 +2,7 @@ package com.example.practicacompleta.service;
 
 import com.example.practicacompleta.entities.Car;
 import com.example.practicacompleta.repository.CarRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CarService {
 
@@ -33,8 +35,7 @@ public class CarService {
     }
 
     public Car addCar(Car car){
-        List<Car> carsList = carRepository.findAll();
-        if(carRepository.findByModel(car.getModel()) == null){
+        if(carRepository.findByModel(car.getModel()).isEmpty()){
             return carRepository.save(car);
         }
         return null;
@@ -45,9 +46,7 @@ public class CarService {
     }
 
     public String deleteCarById(Long id){
-        Optional<Car> carDelete = carRepository.findById(id);
-
-        if(carDelete.isPresent()){
+        if(carRepository.findById(id).isPresent()){
             carRepository.deleteById(id);
             return "Car successfully delete!";
         }
@@ -56,10 +55,9 @@ public class CarService {
     }
 
     public String deleteCarByModel(String model){
-        Car carDelete = carRepository.findByModel(model);
-
-        if(carDelete != null){
-            carRepository.delete(carDelete);
+        Optional<Car> car = carRepository.findByModel(model);
+        if(car.isPresent()){
+            carRepository.deleteByModel(model);
             return "Car successfully delete!";
         }
 

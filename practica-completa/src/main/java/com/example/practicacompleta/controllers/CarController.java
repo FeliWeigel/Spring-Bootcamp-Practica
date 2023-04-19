@@ -37,12 +37,12 @@ public class CarController {
         return ResponseEntity.ok("All cars deleted! Current list of Cars size: " + carService.allCars().size());
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/id/{id}")
     public ResponseEntity<String> deleteCarById(@PathVariable Long id){
         return ResponseEntity.ok(carService.deleteCarById(id));
     }
 
-    @DeleteMapping("/delete/{model}")
+    @DeleteMapping("/delete/model/{model}")
     public ResponseEntity<String> deleteCarByModel(@PathVariable String model){
         return ResponseEntity.ok(carService.deleteCarByModel(model));
     }
