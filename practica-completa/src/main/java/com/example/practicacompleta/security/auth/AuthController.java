@@ -12,8 +12,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> userRegister(@RequestBody RegisterRequest registerRequest){
-        return ResponseEntity.ok(authService.register(registerRequest));
+    public ResponseEntity<Object> userRegister(@RequestBody RegisterRequest registerRequest){
+        return authService.register(registerRequest);
     }
 
     @PostMapping("/login")
@@ -26,6 +26,6 @@ public class AuthController {
 //            HttpServletRequest request,
 //            HttpServletResponse response
 //    ) throws IOException {
-//        service.refreshToken(request, response);
+//        authService.refreshToken(request, response);
 //    }
 }

@@ -1,5 +1,7 @@
 package com.example.practicacompleta.security.config;
 
+import com.example.practicacompleta.config.CustomAccessDeniedHandler;
+import com.example.practicacompleta.config.UnauthorizedEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +21,8 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutService logoutService;
-
+    private final UnauthorizedEntryPoint unauthorizedEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors().disable()
@@ -38,6 +41,10 @@ public class SecurityConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -49,6 +56,5 @@ public class SecurityConfig {
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 .and()
                 .build();
-
     }
 }
